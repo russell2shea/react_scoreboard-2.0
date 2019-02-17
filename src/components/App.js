@@ -1,11 +1,8 @@
-//named import 
-import React, {Component} from 'react';
-
+import React, { Component } from 'react';
 import Header from './Header';
-
 import Player from './Player';
+import AddPlayerForm from './AddPlayerForm';
 
-  
 class App extends Component {
   state = {
     players: [
@@ -31,12 +28,28 @@ class App extends Component {
       }
     ]
   };
+  //player id counter
+  prevPlayerId = 4;
 
-  handelScoreChange = (index, delta) => {
-    
+  handleScoreChange = (index, delta) => {
     this.setState( prevState => ({
       score: prevState.players[index].score += delta
     }));
+  }
+
+  handleAddPlayer = (name) =>{
+    this.setState({
+      players: [
+      // merege existing object in player sate witht he new players array
+      ...this.state.players,
+        {
+          // key and var name match so can just write keyname
+          name,
+          score: 0,
+          id: this.prevPlayerId += 1
+        }
+      ]
+    });
   }
 
   handleRemovePlayer = (id) => {
@@ -52,7 +65,7 @@ class App extends Component {
       <div className="scoreboard">
         <Header 
           title="Scoreboard" 
-          totalPlayers={this.state.players.length} 
+          players={this.state.players}
         />
   
         {/* Players list */}
@@ -67,6 +80,7 @@ class App extends Component {
             removePlayer={this.handleRemovePlayer}           
           />
         )}
+        <AddPlayerForm addPlayer={this.handleAddPlayer}/>
       </div>
     );
   }
