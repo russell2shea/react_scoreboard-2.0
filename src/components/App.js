@@ -7,22 +7,22 @@ class App extends Component {
   state = {
     players: [
       {
-        name: "Guil",
+        name: "Player One",
         score: 0,
         id: 1
       },
       {
-        name: "Treasure",
+        name: "Player Two",
         score: 0,
         id: 2
       },
       {
-        name: "Ashley",
+        name: "Player Three",
         score: 0,
         id: 3
       },
       {
-        name: "James",
+        name: "Player Four",
         score: 0,
         id: 4
       }
@@ -38,17 +38,21 @@ class App extends Component {
   }
 
   handleAddPlayer = (name) =>{
-    this.setState({
-      players: [
-      // merege existing object in player sate witht he new players array
-      ...this.state.players,
-        {
-          // key and var name match so can just write keyname
-          name,
-          score: 0,
-          id: this.prevPlayerId += 1
-        }
-      ]
+    this.setState( prevState => {
+
+      return {
+        players: [
+          // merege existing object in player sate witht he new players array
+          ...prevState.players,
+          {
+            // key and var name match so can just write keyname
+            name,
+            score: 0,
+            id: this.prevPlayerId += 1
+          }
+        ]
+      };
+
     });
   }
 
